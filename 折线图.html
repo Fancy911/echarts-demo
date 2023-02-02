@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./bli/echarts.min.js"></script>
+    <style>
+        .box{
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <script>
+        let arr = ['一月','二月','三月','四月','五月','六月']
+        let arr1 = [1000,999,1111,999,555,999]
+        let arr2 = [2000,929,1211,929,255,929]
+        let Acharts = echarts.init(document.querySelector('.box'))
+        let option = {
+          
+            xAxis: {
+                type: 'category',
+                data: arr,
+                boundaryGap: false // 开头没有间隔 紧挨边缘
+            },
+            yAxis: {
+                type: 'value',
+                scale: true //不从0开始 
+            },
+            series: [
+                {
+                name:'小米',
+                data: arr1,
+                type: 'line',
+                markPoint: {
+                    data:[{
+                        type:'max'
+                    },{
+                        type:'min'
+                    }]
+                },
+                markArea:{// 标注区间
+                    data:[[
+                    {
+                            xAxis:'一月'
+                        },
+                        {
+                            xAxis:'二月'
+                        }
+                    ],[
+                    {
+                            xAxis:'三月'
+                        },
+                        {
+                            xAxis:'四月'
+                        }
+                    ]]
+                },
+                smooth:true, // 线条变得丝滑
+                lineStyle:{
+                    color: 'red',
+                    type:'dashed'// 支持虚线，点线 dotted，实现 solid
+                },
+                areaStyle:{// 填充下半部分
+                    color:'pink'
+                },
+                stack: 'all'// 堆叠图
+            },
+            {
+                name:'苹果',
+                data: arr2,
+                type: 'line',
+                areaStyle:{// 填充下半部分
+                },
+                stack: 'all'// 堆叠图
+            }]
+        }
+        Acharts.setOption(option)
+    </script>
+</body>
+</html>

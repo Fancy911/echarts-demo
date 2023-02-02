@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./bli/echarts.min.js"></script>
+    <style>
+        .box{
+            width: 800px;
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <script>
+      let  data= []
+    for (var i = 0; i< 1500; i++) {
+        data.push([ Math.random() * -2,
+        Math.random() * 300,
+        Math.random() * 1])
+    }
+    for (var i = 0; i< 1500; i++) {
+        data.push([ Math.random() * 2,
+        Math.random() * 300,
+        Math.random() * 1])
+    }
+      var color = new Array();
+for (var i in data) {
+    color[i] = data[i][2];
+}
+var max = Math.max.apply(null, color);
+var min = Math.min.apply(null, color);
+
+    let Acharts = echarts.init(document.querySelector('.box'))
+let option = {
+    xAxis:{
+        scale: true,
+        // interval:1,//强制间隔
+        name:"SHAP value (impact on model output)",
+        position:"right",
+        nameLocation: 'middle',
+        axisLine:{       //y轴
+            show:true
+        },
+        // axisTick:{       //y轴刻度线
+        //     show:false
+        // },
+        splitLine: {     //网格线
+            show: false
+        },
+    },
+    yAxis: [{
+        scale: true,
+        min:-2,
+        max:300,
+        axisLine:{       //y轴
+            show:true
+        },
+        axisTick:{       //y轴刻度线
+            show:false
+        },
+        splitLine: {     //网格线
+            show: false
+        },
+        axisLabel: {
+          show: false,//不显示坐标轴上的文字
+        },
+    },{
+        position:"left",
+        type: 'category',
+        data: ['分类一','分类一','分类一','分类一','分类一','分类一','分类一', '分类二'],
+        axisLine:{       //y轴
+            show:false
+        },
+        axisTick:{       //y轴刻度线
+            show:false
+        },
+        splitLine: {     //网格线
+            show: false
+        },
+    },{
+        name:"Feature value",
+        position:"right",
+        nameLocation: 'middle',
+        offset: 35,
+        axisLine:{       //y轴
+            show:false
+        },
+        axisTick:{       //y轴刻度线
+            show:false
+        },
+        splitLine: {     //网格线
+            show: false
+        }
+    }
+    ],
+    dataRange: {
+        right: '4%',
+        y: 'center',
+        min: min,
+        max: max,
+        precision: 2,
+        itemWidth: 6,
+        itemHeight: '300',
+        align: 'left',
+        text: ['hi gh', 'low'],
+        color: ['#ec2752', '#a3189d', '#4581fa'],
+        // formatter: function(value) {
+        //     return value;
+        // }
+    },
+    series: [
+    {
+        type: 'scatter',
+        symbolSize: 5,
+        symbolRotate:30,
+        label:{
+            //show:true
+        },
+
+        data: data,
+    }]
+}
+        Acharts.setOption(option)
+    </script>
+</body>
+</html>

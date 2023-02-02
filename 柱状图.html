@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./bli/echarts.min.js"></script>
+    <style>
+        .box{
+            width: 600px;
+            height: 300px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+<script>
+ let arr = ['小明', '晓黎', '小王','小站','小青','小鸡','小哈','卧槽']
+ let arr1 = [99, 55, 67,78,54,38,93,84]
+ let arr2 = [92, 55, 67,73,64,18,73,34]
+ let Echarts = echarts.init(document.querySelector('.box'));
+ let optien = {
+    grid:{// 直角坐标系 
+        show:true,
+        // borderWidth: 10,
+        // borderColor: 'red',
+        // left: 120,
+        // top:120,
+        width:200 //可以直接改变图表的宽度和高度 但是不影响tit和其他
+    },
+     title:{// 标题
+        text: '成绩',
+        left:20 ,// 可控制前后左右 默认：左上角
+        link: 'https://www.baidu.com',// 跳转地址
+        textStyle: {// 写样式
+            color: 'red'
+        },
+     },
+    xAxis:{// X轴
+        type: 'category',// 类目轴
+        data: arr // x轴的数据
+    },
+    yAxis:{//Y轴
+        type: 'value'
+    },
+    tooltip:{// 提示
+        trigger:'axis',// item axis 划过显示内容
+        // triggerOn: 'mouseover',// 触发方式 mouseover|click
+        // formatter: '{a}{b}{c}' // 展示相关信息 可以去官网细看 字符串和函数两种方法
+    },
+    dataZoom:[
+        {
+            // type: 'inside', // 鼠标滚轮滚动
+            type: 'slider',
+            xAxisIndex: 0 
+        },
+        {
+            // type: 'inside', // 鼠标滚轮滚动
+            type: 'slider',
+            yAxisIndex: 0,
+            start: 0, // 结束值
+            end: 39, // 初始值
+        }
+],// 区域缩放
+    toolbox:{
+        feature:{
+            saveAsImage:{}, //导出图片 
+            dataView:{},// 数据视图
+            restore:{},// 重置
+            // dataZoom:{},// 区域缩放
+            magicType:{// 动态图表切换 
+                type: ['bar','line']
+            },
+        }
+    },
+    legend:{
+        data:['语文','数学'],// 显示系列 他需要和series里面的name名义一致
+        type: 'scroll',
+        orient: 'vertical',
+        right: 10,
+        top: 20,
+        bottom: 20,
+    },
+    series:[//配置项
+        {
+            name: '语文',
+            type: 'bar',// 柱状图 pie|饼状图 line|折线图
+            data: arr1,// 图标展示数据
+            markPoint: {// 大小值
+                data:[{
+                    max: '最大值'
+                },{
+                    min: '最小值'
+                }]
+            },
+            markLine: {// 平均值
+                symbol:"none",               //去掉警戒线最后面的箭头
+                type: 'average',
+				label:{
+					position:"start"          //将警示值放在哪个位置，三个值“start”,"middle","end"  开始  中点 结束
+				},
+                data : [{
+					silent:false,             //鼠标悬停事件  true没有，false有
+					lineStyle:{               //警戒线的样式  ，虚实  颜色
+                        type:"solid",
+						color:"#FA3934",
+					},
+					yAxis: 0.75           // 警戒线的标注值，可以有多个yAxis,多条警示线   或者采用   {type : 'average', name: '平均值'}，type值有  max  min  average，分为最大，最小，平均值
+				}]
+            },
+            label:{ //柱状图
+                show: true,// 显示分数
+                // rotate: 60,// 旋转
+                position: 'top' // 显示的位置
+            },
+            barWidth: '30%',//柱状图的宽度 
+            itemStyle: {// 柱状图显示颜色
+                color: '#a90000'
+            }
+        },
+        {
+            name: '数学',
+            type: 'bar',// 柱状图 pie|饼状图 line|折线图
+            data: arr2,// 图标展示数据
+        }
+]
+ }
+ Echarts.setOption(optien)
+</script>
+</html>

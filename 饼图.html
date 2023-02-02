@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./bli/echarts.min.js"></script>
+    <style>
+      .box {
+        width: 600px;
+        height: 300px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box"></div>
+  </body>
+  <script>
+    let arr = [
+      {
+        name: '淘宝',
+        value: 88
+      },
+      {
+        name: '平嘻嘻',
+        value: 88
+      },
+      {
+        name: '京东',
+        value: 88
+      },
+      {
+        name: '美团',
+        value: 88
+      },
+      {
+        name: '滴滴',
+        value: 88
+      },
+      {
+        name: '饿了么',
+        value: 188
+      }
+    ]
+    let Echarts = echarts.init(document.querySelector('.box'))
+    let optien = {
+        tooltip:{
+        trigger:'item',// item axis 划过显示内容
+        // triggerOn: 'mouseover',// 触发方式 mouseover|click
+        // formatter: '{a}{b}{c}' // 展示相关信息 可以去官网细看 字符串和函数两种方法
+        },
+        series:{
+            type:'pie',
+            data: arr,
+            label:{ // 线条的名字
+                show: true,
+                formatter: parps => {
+                    console.log(parps);
+                    return `${parps.data.name}${parps.data.value}总占比${parps.percent}%`
+                }
+            },
+            // radius:80, // 圆的半径 也可以是% 
+            // radius: [80,90], // 内圆半径和外雨半径  也可以是% 
+            // roseType: 'radius', //南丁格尔图 根据百分百占比展示
+            // selectedMode: 'single',// 选中效果 ,能够偏离原点
+            // selectedMode: 'multiple', // 选中效果 ,能够偏离原点
+            // selectedOffset: 30,// 偏离距离
+        }
+    }
+    Echarts.setOption(optien)
+  </script>
+</html>
